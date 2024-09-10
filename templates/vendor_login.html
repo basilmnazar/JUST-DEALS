@@ -1,0 +1,39 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'src/styles/style.css' %}" />
+</head>
+<body>
+    <section class="super_admin_login" >
+        <section class="super_admin_login">
+            <form class="login-form" method="post" action="{% url 'vendor_login' %}">
+                {% csrf_token %}
+                <p class="login-title">Sign in to Vendor Dashboard</p>
+                <div class="field-group">
+                    <input type="text" placeholder="Enter username" name="username" class="username-input" required>
+                </div>
+                <div class="field-group">
+                    <input type="password" placeholder="Enter password" class="password-input" name="password" required>
+                </div>
+                <button type="submit" class="submit-button">Sign in</button>
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p class="message {{ message.tags }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </section>
+    </section>
+</body>
+</html>
+
+
+
+

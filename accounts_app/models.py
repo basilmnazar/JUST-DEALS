@@ -9,6 +9,8 @@ class CustomUser(AbstractUser):
         ADMIN = "ADMIN", "Admin"
         USER = "USER", "User"
         DEALER = "DEALER", "Dealer"
+        VENDOR = "VENDOR", "Vendor"  # Add Vendor role here
+
 
     base_role = Role.ADMIN
     role = models.CharField(max_length=50, choices=Role.choices)
@@ -52,3 +54,17 @@ class Dealer(CustomUser):
 
     class Meta:
         proxy = True    
+
+
+class VendorManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=CustomUser.Role.VENDOR)
+
+    
+class Vendor(CustomUser):
+    base_role = CustomUser.Role.VENDOR
+    vendor = VendorManager()
+
+    class Meta:
+        proxy = True 

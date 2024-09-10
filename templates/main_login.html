@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="ecommerce, market, shop, mart, cart, deal, multipurpose, marketplace">
+    <meta name="description" content="Carrot - Multipurpose eCommerce HTML Template.">
+    <meta name="author" content="ashishmaraviya">
+
+    <title>Carrot - Multipurpose eCommerce HTML Template</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'vendors/login_assets/img/logo/favicon.png' %}">
+
+    <!-- Icon CSS -->
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/remixicon.css' %}">
+
+    <!-- Vendor -->
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/aos.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/range-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/jquery.slick.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/vendor/slick-theme.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'vendors/login_assets/css/style.css' %}">
+</head>
+
+<body class="body-bg-6">
+
+    <!-- Loader -->
+    <div id="cr-overlay">
+        <span class="loader"></span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <!-- Header content here -->
+    </header>
+
+    <!-- Breadcrumb -->
+    {% comment %} <section class="section-breadcrumb">
+        <div class="cr-breadcrumb-image">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cr-breadcrumb-title">
+                            <h2>Login</h2>
+                            <span> <a href="{% url 'home' %}">Home</a> - Login</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+
+    <!-- Login -->
+    <section class="section-login padding-tb-100">
+        <div class="container">
+            <div class="row d-none">
+                <div class="col-lg-12">
+                    <div class="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                        <div class="cr-banner">
+                            <h2>Login</h2>
+                        </div>
+                        <div class="cr-banner-sub-title">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore lacus vel facilisis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="cr-login" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                        <div class="form-logo">
+                            <img src="{% static 'vendors/login_assets/img/logo/logo.png' %}" alt="logo">
+                        </div>
+                        <form class="cr-content-form" method="post">
+                            {% csrf_token %}
+                        
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" placeholder="Enter Your Name" class="cr-form-control" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" placeholder="Enter Your Phone Number" class="cr-form-control" name="phone_number">
+                            </div>
+                        
+                            <div class="login-buttons">
+                                <button type="submit" class="cr-button">Login</button>
+                            </div>
+                        </form>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendor Custom -->
+    <script src="{% static 'vendors/login_assets/js/vendor/jquery-3.6.4.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/jquery.zoom.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/mixitup.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/range-slider.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/aos.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'vendors/login_assets/js/vendor/slick.min.js' %}"></script>
+
+    <!-- Main Custom -->
+    <script src="{% static 'vendors/login_assets/js/main.js' %}"></script>
+</body>
+
+</html>

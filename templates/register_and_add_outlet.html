@@ -18,95 +18,85 @@
     
 	<section class="reg_main">
 
-		<form class="form" enctype="multipart/form-data" action="{% url 'register_and_add_outlet' %}" method="post">
+		<form class="form" enctype="multipart/form-data" action="{% url 'register_and_add_outlet' vendor_id=vendor.id %}" method="post">
 			{% csrf_token %}
-	
+		
 			<p class="title">Register and Add Outlet</p>
-	
+		
 			<!-- Registration Fields -->
 			<div class="registration-section">
 				<h2>Register</h2><br><br>
-	
-				<label for="merchant_type">Merchant Type</label>
+				<label for="merchant_type">Merchant Type:</label>
 				<select class="input" name="merchant_type" required>
-					{% for choice in choices %}
-					<option value="{{ choice.0 }}">{{ choice.1 }}</option>
+					{% for value, label in merchant_type_choices %}
+						<option value="{{ value }}">{{ label }}</option>
 					{% endfor %}
 				</select><br><br>
-	
+		
 				<label>
 					<input class="input" type="text" placeholder="Merchant Name" required name="merchant_name">
-					{% comment %} <span>Merchant Name</span> {% endcomment %}
 				</label>
 				<label>
-					<input class="input" type="text" placeholder="business_owner_name" required name="business_owner_name">
-					{% comment %} <span>Merchant Address</span> {% endcomment %}
+					<input class="input" type="text" placeholder="Business Owner Name" required name="business_owner_name">
 				</label>
 				<label>
 					<input class="input" type="text" placeholder="Merchant Address" required name="merchant_address">
-					{% comment %} <span>Merchant Address</span> {% endcomment %}
 				</label>
 				
 				<label>
 					<input class="input" type="text" placeholder="Enter your city" required name="city">
-					{% comment %} <span>City</span> {% endcomment %}
 				</label>
 				<label>
 					<input class="input" type="number" placeholder="Phone" required name="phone">
-					{% comment %} <span>Phone</span> {% endcomment %}
 				</label>
 				<label>
-					<input class="input" type="number" placeholder="contact_person" required name="contact_person">
-					{% comment %} <span>Phone</span> {% endcomment %}
+					<input class="input" type="number" placeholder="Contact Person" required name="contact_person">
 				</label>
 				<label>
 					<input class="input" type="email" placeholder="Email" required name="email">
-					{% comment %} <span>Email</span> {% endcomment %}
 				</label>
 				<label>
 					<input class="input" type="text" placeholder="Username" required name="uname">
-					{% comment %} <span>Username</span> {% endcomment %}
 				</label>
 				<label>
 					<input class="input" type="password" id="pass" placeholder="Password" required name="password">
-					{% comment %} <span>Password</span> {% endcomment %}
 				</label>
 				<label>
 					<input class="input" type="password" id="confirm_pass" placeholder="Confirm Password" required name="cpassword">
-					{% comment %} <span>Confirm Password</span> {% endcomment %}
 				</label>
 			</div>
-	
+		
 			<hr>
-	
+		
 			<!-- Outlet Fields -->
 			<div class="outlet-section">
 				<h2>Add Outlet</h2>
-	
+		
 				<div class="form-group">
 					<label for="item-name">Outlet Name:</label>
-					<input type="text" id="item-name" name="item-name" required>
+					<input type="text" id="item-name" name="outlet_name" required>
 				</div>
 				<div class="form-group">
 					<label for="description">Outlet Description:</label>
-					<textarea id="description" name="description" rows="4" required></textarea>
+					<textarea id="description" name="outlet_description" rows="4" required></textarea>
 				</div>
 				<div class="form-group">
 					<label for="time-from">Time From:</label>
-					<input type="time" id="time-from" name="time-from" required>
+					<input type="time" id="time-from" name="start_time" required>
 					<label for="time-to">To:</label>
-					<input type="time" id="time-to" name="time-to" required>
+					<input type="time" id="time-to" name="end_time" required>
 				</div>
-	
+		
 				<div class="form-group">
 					<label for="image">Upload Image:</label>
-					<input type="file" id="image" name="image" accept="image/*" required>
+					<input type="file" id="image" name="outlet_img" accept="image/*" required>
 					<span class="file-label">Accepted formats: JPG, JPEG, PNG</span>
 				</div>
 			</div>
-	
+		
 			<input class="submit" type="submit" value="Register and Add Outlet" name="submit">
 		</form>
+		
 	
 	</section>
 	

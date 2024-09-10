@@ -175,6 +175,9 @@ p{
 .add_button:hover {
   background-color: #d43f3a;
 }
+.add_buttons:hover {
+  background-color: #3CB371;
+}
 
 .voucher_price {
   display: flex;
@@ -285,3 +288,158 @@ p{
   padding: 5px;
   box-sizing: border-box;
 }
+
+/* #popup */
+/* Modal Background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+/* Modal Background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* Adjusted margin for better centering */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%; /* Adjusted width for a better fit */
+  max-width: 800px; /* Optional: limit max width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Optional: add shadow */
+  border-radius: 8px; /* Optional: rounded corners */
+  display: flex;
+  flex-direction: column;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer; /* Make sure cursor is a pointer */
+  margin-left: 90%;
+  bottom: 28px;
+  position: relative;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Coupon Container */
+.coupon-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows coupons to wrap to the next line if needed */
+  gap: 15px; /* Space between coupons */
+  margin-top: 10px; /* Space from the voucher title */
+}
+.add_buttons{
+  background-color: #2E8B57;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+.button_call {
+  background-color: #6d8fe6;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+
+.button_call:hover {
+  background-color: #4a6eb1;
+}
+.voucher_name{
+  margin: auto;
+}
+
+/* Individual Coupon */
+.coupon {
+  display: flex;
+  align-items: center; /* Vertically center items */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%; /* Full width of the container */
+  max-width: calc(100% - 15px); /* Adjust width and subtract gap */
+}
+
+/* Coupon Details */
+.coupon-details {
+  flex: 1; /* Take up remaining space */
+}
+
+/* Coupon Button */
+.coupon-button {
+  margin-left: auto; /* Push button to the right */
+  padding: 10px 20px;
+  background-color: #007bff; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.or{
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center items */
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%; /* Full width of the container */
+  max-width: calc(100% - 15px); /* Adjust width and subtract gap */
+}
+
+.coupon-button:hover {
+  background-color: #0056b3; /* Darker button color on hover */
+}
+
+
+

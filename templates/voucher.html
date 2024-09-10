@@ -23,14 +23,7 @@
                 <label for="item-name">Voucher Price:</label>
                 <input type="Number" id="item-price" name="item-price" required>
             </div>
-            {% comment %} <div class="form-group">
-                <label for="time-from">Time From:</label>
-                <div class="time-inputs">
-                    <input type="time" id="time-from" name="time-from" required>
-                    <span>to</span>
-                    <input type="time" id="time-to" name="time-to" required>
-                </div>
-            </div> {% endcomment %}
+         
             <div class="form-group">
                 <label for="description">voucher About</label>
                 <textarea id="about" name="about" rows="4" required></textarea>
@@ -39,14 +32,10 @@
                 <label for="button_link">Voucher Button Link:</label>
                 <input type="url" id="button_link" name="button_link" value="{{ edit_items.button_link }}" required>
             </div>
-            {% comment %} <div class="form-group">
-                <label for="image">Upload Image:</label>
-                <input type="file" id="image" name="image" accept="image/*" required>
-                <span class="file-label">Accepted formats: JPG, JPEG, PNG</span>
-            </div> {% endcomment %}
+            
             <div class="form-group">
-                
-                <button type="submit">Add</button>
+                <button type="submit" name="action" value="save">Save</button>
+                <button type="submit" name="action" value="cancel" style="background-color:red;">Cancel</button>
             </div>
         </form>
     

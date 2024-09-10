@@ -48,7 +48,6 @@
       <div id="London" class="tabcontent">
         {% for voucher in vouchers %}
         <div class="cards_deals">
-    
             <div class="name_deal_div">
                 <h2 class="deal_name">
                     <h2>{{ voucher.voucher_name }}</h2>
@@ -59,28 +58,55 @@
                 <p>Timing From {{ items.start_time }}</p>
                 <p>Time End {{ items.end_time }}</p>
             </div>
-             
-             <!-- Date picker added here -->
-            <form method="post" action="{% url 'update_voucher_date' %}">
-              {% csrf_token %}
-              <div class="date_picker">
-                  <label for="voucher-date-{{ forloop.counter }}">Select Date:</label>
-                  <input type="hidden" name="voucher_id" value="{{ voucher.id }}">  <!-- Hidden input for voucher ID -->
-                  <input type="date" id="voucher-date-{{ forloop.counter }}" name="voucher_date" class="date-picker-input">
-                  <button type="submit" class="confirm-button">Confirm</button>
-              </div>
-            </form>
             <div class="voucher_price">
                 <img class="rupee-icon" src="{% static 'src/images/rupee-indian (1).png' %}" alt="Rupee">
                 <h3 class="proce_deal">{{ voucher.voucher_price }} /-</h3>
             </div>
-            <a href="{{ voucher.button_link }}">
-                <button class="add_button">BUY</button>
-            </a>
+            <div class="button-container">
+              <button class="add_button" data-modal-id="modal-{{ forloop.counter }}">BUY</button>
+              <a href="tel:+918593810130" class="button__call">
+                <button class="button_call">Customer Care</button>
+              </a>
+            </div>
+            <!-- Popup Modal -->
+            <div id="modal-{{ forloop.counter }}" class="modal">
+                <div class="modal-content">
+                  <h2 class="voucher_name">{{ voucher.voucher_name }}</h2>
+                  <span class="close" data-modal-id="modal-{{ forloop.counter }}">&times;</span>
+                  <div class="coupon-container">
+                    {% for coupon in coupons %}
+                    <div class="coupon">
+                      <div class="coupon-details">
+                        <h3>{{ coupon.coupon_name }}</h3>
+                        {% comment %} <p>{{ coupon.coupon_description }}</p> {% endcomment %}
+                        <p>Price: ${{ coupon.coupon_price }}</p>
+                      </div>
+                      <a href="{{ coupon.coupon_button_link }}" target="_blank" class="">
+                        <button class="add_buttons">PAY</button>
+                      </a>
+                    </div>
+                    
+                    {% endfor %}
+                    <div class="or">OR</div>
+                    <div class="coupon">
+                        <div class="coupon-details">
+                          <h3>{{ voucher.voucher_name }}</h3>
+                          {% comment %} <p>{{ coupon.coupon_description }}</p> {% endcomment %}
+                          <p>Price: {{voucher.voucher_price}}</p>
+                        </div>
+                        <a href="{{voucher.button_link  }}" target="_blank" class="">
+                          <button class="add_button">PAY</button>
+                        </a>
+                      </div>
+                  </div>
+                </div>
+              </div>
             
-        </div></br>
+        </div>
         {% endfor %}
-      </div>
+        </br>
+    </div>
+    
     
       
       <div id="Paris" class="tabcontent">
@@ -148,6 +174,48 @@
             alert('Please select a date.');
         }
     }
+
+    ////////
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to open a modal by its ID
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+    
+        // Function to close a modal by its ID
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+    
+        // Add click event listeners to all buttons with class 'add_button'
+        document.querySelectorAll('.add_button').forEach(button => {
+            button.addEventListener('click', function () {
+                const modalId = this.getAttribute('data-modal-id');
+                openModal(modalId);
+            });
+        });
+    
+        // Add click event listeners to all close buttons
+        document.querySelectorAll('.close').forEach(closeButton => {
+            closeButton.addEventListener('click', function () {
+                const modalId = this.getAttribute('data-modal-id');
+                closeModal(modalId);
+            });
+        });
+    
+        // Close the modal when clicking outside of the modal content
+        window.addEventListener('click', function (event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        });
+    });
 
   </script>
 </section>

@@ -5,4 +5,5 @@ from .models import*
 
 admin.site.register(Dealers)
 admin.site.register(Voucher)
-
+admin.site.register(VoucherCoupon)
+admin.site.register(Vendor)
