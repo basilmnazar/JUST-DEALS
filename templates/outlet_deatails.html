@@ -79,7 +79,7 @@
                       <div class="coupon-details">
                         <h3>{{ coupon.coupon_name }}</h3>
                         {% comment %} <p>{{ coupon.coupon_description }}</p> {% endcomment %}
-                        <p>Price: ${{ coupon.coupon_price }}</p>
+                        <p>Price: {{ coupon.coupon_price }}</p>
                       </div>
                       <a href="{{ coupon.coupon_button_link }}" target="_blank" class="">
                         <button class="add_buttons">PAY</button>

@@ -4,6 +4,7 @@ from deal_app.models import*
 from django.shortcuts import render, get_object_or_404
 import uuid
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.contrib.auth import authenticate, login as auth_login
 
 
@@ -96,10 +97,13 @@ def vendor_register(request):
         'temp_unique_id': temp_unique_id,
         'choices': Vendor.VENDOR_TYPE_CHOICES
     })
+
 def admin_vendors(request):
     # Fetch all vendors from the database
-    vendors = Vendor.objects.all()
-    
+    # vendors = Vendor.objects.all()
+    #this is view for list the vendors, number of dealer registries list display, and sort it the number of dealer register
+    vendors = Vendor.objects.annotate(dealer_count=Count('dealers')).order_by('-dealer_count')
+
     return render(request, 'admin_vendors.html', {
         'vendors': vendors,
     })
@@ -149,7 +153,15 @@ def vendor_login(request):
 
     return render(request, 'vendor_login.html')
 
-
+def vendor_logout(request):
+    if 'vendor_id' in request.session:
+        # Clear the session
+        del request.session['vendor_id']
+        messages.success(request, "You have been logged out.")
+    else:
+        messages.error(request, "You are not logged in.")
+    
+    return redirect('vendor_login')
 
 def vendor_detail(request, id):
     vendor = get_object_or_404(Vendor, id=id)
@@ -164,6 +176,6 @@ def vendor_detail(request, id):
 #     # Redirect to the index page with the vendor ID as a query parameter
 #     return redirect(f'/index/?vendor_id={id}')
 
-def admin_detail(request, id):
+def admin_vendor_detail(request, id):
     vendor = get_object_or_404(Vendor, id=id)
     return render(request, 'admin_vendors.html', {'vendor': vendor})

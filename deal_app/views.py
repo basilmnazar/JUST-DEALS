@@ -40,7 +40,17 @@ def main_login(request):
         if not re.match(r'^\d{10}$', user_phone_number):
             messages.error(request, 'Invalid phone number. It must be a 10-digit number.')
             return render(request, 'main_login.html')
+
+        # Validate the username
+        if not name_user:
+            messages.error(request, 'Username cannot be empty.')
+            return render(request, 'main_login.html')
         
+        # Check if the username already exists
+        if Users.objects.filter(name_user=name_user).exists():
+            messages.error(request, 'Username already exists. Please choose a different username.')
+            return render(request, 'main_login.html')
+
         # Save the user data to the database
         Users.objects.create(name_user=name_user, user_phone_number=user_phone_number)
         
