@@ -646,24 +646,21 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            
                                             <th>Username</th>
-                                            <th>phone number</th>
-                                            
+                                            <th>Phone Number</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
-                                        <tr onclick="window.location.href='{% url 'vendor_detail' vendor.id %}'" style="cursor: pointer;">
-                                          
-                                            <td>{{ user.name}}</td>
-                                            <td>{{ user.phone number }}</td>
-                                           
-                                            <td>
-                                                <input class="form-check-input" type="checkbox">
-                                            </td>
+                                        {% for user in users %}
+                                        <tr>
+                                            <td>{{ user.name_user }}</td>
+                                            <td>{{ user.user_phone_number }}</td>
                                         </tr>
-                                      
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="2">No users found.</td>
+                                        </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

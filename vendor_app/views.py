@@ -6,6 +6,7 @@ import uuid
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.contrib.auth import authenticate, login as auth_login
+import re
 
 
 def vendor_register(request):
@@ -99,13 +100,19 @@ def vendor_register(request):
     })
 
 def admin_vendors(request):
-    # Fetch all vendors from the database
-    # vendors = Vendor.objects.all()
-    #this is view for list the vendors, number of dealer registries list display, and sort it the number of dealer register
+       # Fetch all vendors and annotate with dealer count
     vendors = Vendor.objects.annotate(dealer_count=Count('dealers')).order_by('-dealer_count')
+    # Fetch total number of users
+    total_users = Users.objects.count()
+    users = Users.objects.all()
+
 
     return render(request, 'admin_vendors.html', {
         'vendors': vendors,
+        'total_users': total_users,
+        'users': users,
+
+
     })
 
 def vendor_dashboard(request):
@@ -128,11 +135,14 @@ def vendor_dashboard(request):
 
     # Fetch dealers related to the logged-in vendor
     dealers = Dealers.objects.filter(vendor=logged_in_vendor)
+    # Fetch users related to the logged-in vendor
+    users = Users.objects.filter(vendor=logged_in_vendor)
 
     return render(request, 'vendor_dashboard.html', {
         'logged_in_vendor': logged_in_vendor,  # Pass the logged-in vendor details to the template
         'dealers': dealers,  # Pass the list of dealers to the template
-    })
+        'users': users,  # Pass the list of users to the template
+    }) 
 
 def vendor_login(request):
     if request.method == 'POST':
@@ -179,3 +189,68 @@ def vendor_detail(request, id):
 def admin_vendor_detail(request, id):
     vendor = get_object_or_404(Vendor, id=id)
     return render(request, 'admin_vendors.html', {'vendor': vendor})
+
+
+def vendor_index(request, vendor_id):
+    # Fetch the vendor based on the provided vendor_id
+    vendor = get_object_or_404(Vendor, id=vendor_id)
+    
+    # Fetch items related to the vendor
+    # items = Dealers.objects.filter(vendor=vendor)
+    items = Dealers.objects.all()
+    # merchant_types = Dealers.objects.filter(vendor=vendor).values_list('merchant_type', flat=True).distinct()
+    merchant_types = Dealers.objects.all().values_list('merchant_type', flat=True).distinct()
+    
+    context = {
+        'vendor': vendor,
+        'items': items,
+        'merchant_types': merchant_types
+    }
+    
+    return render(request, 'index.html', context)
+
+
+def vendor_main_login(request, vendor_id=None):
+    if request.method == 'POST':
+        # Retrieve form data
+        name_user = request.POST.get('name')
+        user_phone_number = request.POST.get('phone_number')
+
+        # Validate the phone number
+        if not re.match(r'^\d{10}$', user_phone_number):
+            messages.error(request, 'Invalid phone number. It must be a 10-digit number.')
+            return render(request, 'main_login.html')
+
+        # Validate the username
+        if not name_user:
+            messages.error(request, 'Username cannot be empty.')
+            return render(request, 'main_login.html')
+
+        # Check if the username already exists
+        if Users.objects.filter(name_user=name_user).exists():
+            messages.error(request, 'Username already exists. Please choose a different username.')
+            return render(request, 'main_login.html')
+
+        # Get the vendor_id from the session if not passed as a parameter
+        if vendor_id is None:
+            vendor_id = request.session.get('vendor_id')
+
+        if not vendor_id:
+            messages.error(request, 'Vendor ID is required to create a user.')
+            return redirect('vendor_login')  # Redirect to vendor login if vendor_id is missing
+
+        try:
+            vendor = get_object_or_404(Vendor, id=vendor_id)
+            # Save the user data to the database
+            Users.objects.create(name_user=name_user, user_phone_number=user_phone_number, vendor=vendor)
+            print(f"User created: {name_user}, {user_phone_number}")
+
+            # Redirect to the vendor's index page with the correct URL
+            return redirect('vendor_index', vendor_id=vendor_id)
+
+        except Exception as e:
+            messages.error(request, f"An error occurred while creating the user: {str(e)}")
+            return render(request, 'main_login.html')
+
+    # If GET request or POST failed, render the login page
+    return render(request, 'main_login.html')

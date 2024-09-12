@@ -9,8 +9,9 @@ urlpatterns =[
    path('vendor_dashboard', vendor_dashboard, name='vendor_dashboard'),
    path('vendor_detail/<int:id>/', vendor_detail, name='vendor_detail'),
    path('vendor/logout/', vendor_logout, name='vendor_logout'),
+   path('vendor/<int:vendor_id>/index/', vendor_index, name='vendor_index'),
+   path('vendor/<int:vendor_id>/main_login/', vendor_main_login, name='main_login'),
 
-   # path('vendor/<int:id>/', vendor_redirect, name='vendor_redirect'),
 
 
 

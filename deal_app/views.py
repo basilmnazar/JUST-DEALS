@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ValidationError
 from deal_app.models import*
 from nearbuy_app.models import*
+import re
 # from datetime import time
 from .models import Dealers
 from .models import Vendor
@@ -35,7 +36,7 @@ def main_login(request):
         # Retrieve form data
         name_user = request.POST.get('name')
         user_phone_number = request.POST.get('phone_number')
-        
+
         # Validate the phone number
         if not re.match(r'^\d{10}$', user_phone_number):
             messages.error(request, 'Invalid phone number. It must be a 10-digit number.')
@@ -45,21 +46,26 @@ def main_login(request):
         if not name_user:
             messages.error(request, 'Username cannot be empty.')
             return render(request, 'main_login.html')
-        
+
         # Check if the username already exists
         if Users.objects.filter(name_user=name_user).exists():
             messages.error(request, 'Username already exists. Please choose a different username.')
             return render(request, 'main_login.html')
 
-        # Save the user data to the database
-        Users.objects.create(name_user=name_user, user_phone_number=user_phone_number)
-        
-        # Redirect to the index page
-        return redirect('index')
-    
-    return render(request, 'main_login.html')
-    
+        try:
+            # Save the user data to the database
+            Users.objects.create(name_user=name_user, user_phone_number=user_phone_number)
+            print(f"User created: {name_user}, {user_phone_number}")
 
+            # Redirect to the user list or another page
+            return redirect('user_list')
+
+        except Exception as e:
+            messages.error(request, f"An error occurred while creating the user: {str(e)}")
+            return render(request, 'main_login.html')
+
+    # If GET request or POST failed, render the login page
+    return render(request, 'main_login.html')
 
 
 # views for registration /////////////
@@ -240,7 +246,7 @@ def outlet_category(request, category=None):
         outlets = Dealers.objects.all()
 
     return render(request, 'outlet_catogory.html', {
-        'items': outlets,
+        'items': outlets, 
         'merchant_types': merchant_types,
         'selected_type': selected_type,
         'current_category': merchant_types.get(selected_type, 'All Catogories')  # Default to 'All Categories' if none is selected
@@ -263,23 +269,7 @@ def index(request):
     
     return render(request, 'index.html', context)
 
-def vendor_index(request, vendor_id):
-    # Fetch the vendor based on the provided vendor_id
-    vendor = get_object_or_404(Vendor, id=vendor_id)
-    
-    # Fetch items related to the vendor
-    # items = Dealers.objects.filter(vendor=vendor)
-    items = Dealers.objects.all()
-    # merchant_types = Dealers.objects.filter(vendor=vendor).values_list('merchant_type', flat=True).distinct()
-    merchant_types = Dealers.objects.all().values_list('merchant_type', flat=True).distinct()
-    
-    context = {
-        'vendor': vendor,
-        'items': items,
-        'merchant_types': merchant_types
-    }
-    
-    return render(request, 'index.html', context)
+
 
 
 def add_voucher_coupon(request):

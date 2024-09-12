@@ -109,3 +109,12 @@ class VoucherCoupon(models.Model):
     coupon_description = models.TextField(blank=True, null=True, default='')
     coupon_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     coupon_button_link = models.URLField(max_length=200, blank=True, null=True)
+
+
+class Users(models.Model):
+    name_user = models.CharField(max_length=100)
+    user_phone_number = models.CharField(max_length=10, unique=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='users')
+
+    def __str__(self):
+        return self.name_user
