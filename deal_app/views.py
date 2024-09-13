@@ -37,6 +37,8 @@ def main_login(request):
         name_user = request.POST.get('name')
         user_phone_number = request.POST.get('phone_number')
 
+        print(f"Received username: {name_user}, phone number: {user_phone_number}")
+
         # Validate the phone number
         if not re.match(r'^\d{10}$', user_phone_number):
             messages.error(request, 'Invalid phone number. It must be a 10-digit number.')
@@ -53,19 +55,20 @@ def main_login(request):
             return render(request, 'main_login.html')
 
         try:
-            # Save the user data to the database
-            Users.objects.create(name_user=name_user, user_phone_number=user_phone_number)
-            print(f"User created: {name_user}, {user_phone_number}")
+            # Create user instance
+            user = Users.objects.create(name_user=name_user, user_phone_number=user_phone_number)
+            print(f"User created: {user}")
 
-            # Redirect to the user list or another page
-            return redirect('user_list')
+            # Confirm redirection
+            print("User created successfully. Redirecting to index...")
+            return redirect('index')
 
         except Exception as e:
             messages.error(request, f"An error occurred while creating the user: {str(e)}")
             return render(request, 'main_login.html')
 
-    # If GET request or POST failed, render the login page
     return render(request, 'main_login.html')
+
 
 
 # views for registration /////////////
