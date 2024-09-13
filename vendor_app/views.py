@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from django.contrib.auth import authenticate, login as auth_login
 import re
+from admin_backend.decorators import super_login_required
+
 
 
 def vendor_register(request):
@@ -99,18 +101,22 @@ def vendor_register(request):
         'choices': Vendor.VENDOR_TYPE_CHOICES
     })
 
+@super_login_required
 def admin_vendors(request):
        # Fetch all vendors and annotate with dealer count
     vendors = Vendor.objects.annotate(dealer_count=Count('dealers')).order_by('-dealer_count')
     # Fetch total number of users
     total_users = Users.objects.count()
     users = Users.objects.all()
+    total_vendors = Vendor.objects.count()
 
 
     return render(request, 'admin_vendors.html', {
         'vendors': vendors,
         'total_users': total_users,
         'users': users,
+        'total_vendors': total_vendors
+
 
 
     })

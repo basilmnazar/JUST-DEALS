@@ -92,7 +92,7 @@
 	<!-- End Google Tag Manager -->
 </head>
 <body>
-	<div class="pre-loader">
+	{% comment %} <div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo">
 				<img src="{% static 'src/images/deals_logo.png' %}" alt="" />
@@ -103,7 +103,7 @@
 			<div class="percent" id="percent1">0%</div>
 			<div class="loading-text">Loading...</div>
 		</div>
-	</div>
+	</div> {% endcomment %}
 
 	<div class="header">
 		<div class="header-left">
@@ -545,6 +545,7 @@
 						</a>
 						<ul class="submenu">
 							<li><a href="{% url 'admin_index' %}">Admin Dashboard</a></li>
+							<li><a href="{% url 'admin_vendors' %}">VENDOR Dashboard</a></li>
 							
 							{% comment %} <thead>
 								<tr>
@@ -553,12 +554,11 @@
 								</tr>
 							</thead> {% endcomment %}
 
-							{% for dealerdata in dealerdatas %}
-							{% comment %} <td>{{ forloop.counter }}.</td> {% endcomment %}
+							{% comment %} {% for dealerdata in dealerdatas %}
 
 								<li><a href="">{{ dealerdata.user.username }}</a></li>
 							
-							{% endfor %}
+							{% endfor %} {% endcomment %}
 							
 						</ul>
 					</li>
